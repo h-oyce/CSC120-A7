@@ -5,11 +5,13 @@ import java.util.ArrayList;
 public class House extends Building {
   private ArrayList<String> residents;
   private Boolean hasDiningHall;
+  private Boolean hasElevator;
 
-  public House(String name, String address, int nFloors, boolean hasdiningHall) {
+  public House(String name, String address, int nFloors, boolean hasdiningHall, boolean hasElevator) {
     super(name, address, nFloors);
     this.residents = new ArrayList<String>();
     this.hasDiningHall = hasDiningHall;
+    this.hasElevator = hasElevator;
     System.out.println("You have built a house!");
 
   }
@@ -52,13 +54,32 @@ public class House extends Building {
     return false;
   }
 
+  @Override
+  public void showOptions() { // overrides showOptions method from Building class
+    System.out.println("Available options at " + this.name
+        + ":\n + enter() \n + exit() \n + goUp() \n + goDown()\n + goToFloor(n) \n + moveIn(name) \n + moveOut(name) \n + isResident(name)");
+  }
+
+  public void goToFloor(int floorNum) {
+    super.goToFloor(floorNum);
+    if (hasElevator == true) {
+      System.out.println("...Using elevator...");
+      super.goToFloor(floorNum);
+    } else {
+      System.out.println("This house doesn't have an elevator. Please take the stairs.");
+    }
+  }
+
   public static void main(String[] args) {
-    House Talbot = new House("Talbot", "25 Prospect St", 3, false);
-    Talbot.moveIn("Juniper");
-    Talbot.moveIn("Laura");
-    Talbot.moveIn("Chlo");
-    Talbot.moveOut("Laura");
-    System.out.println(Talbot.isResident("Grace"));
+    House Talbot = new House("Talbot", "25 Prospect St", 3, false, false);
+    // Talbot.moveIn("Juniper");
+    // Talbot.moveIn("Laura");
+    // Talbot.moveIn("Chlo");
+    // Talbot.moveOut("Laura");
+    // System.out.println(Talbot.isResident("Grace"));
+    // Talbot.showOptions();
+    Talbot.enter();
+    Talbot.goToFloor(1);
   }
 
 }
